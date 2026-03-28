@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projets — Bineta DIA</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    .page-hero {
+      padding: 140px 0 5rem;
+      background: linear-gradient(135deg, var(--violet-mist), var(--white));
+      text-align: center;
+    }
+    .page-hero p { max-width: 540px; margin: 1rem auto 0; color: var(--text-light); }
+    .search-section { background: var(--white); padding: 3rem 0; border-bottom: 1px solid var(--border); }
+    .search-wrap { max-width: 700px; margin: 0 auto; }
+    .search-wrap h3 { margin-bottom: 0.5rem; }
+    .search-wrap p { margin-bottom: 1.5rem; color: var(--text-light); font-size:0.9rem; }
+    .search-form { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+    .search-form input { flex: 1; min-width: 200px; }
+    .filter-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+    .chip {
+      padding: 0.35rem 1rem; border-radius: 50px; font-size: 0.8rem; font-weight: 600;
+      cursor: pointer; border: 1.5px solid var(--border); background: var(--bg);
+      color: var(--text-mid); transition: var(--transition);
+    }
+    .chip.active, .chip:hover { background: var(--violet-main); color: var(--white); border-color: var(--violet-main); }
+    .projects-section { padding: 5rem 0; }
+    .projects-big-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; }
+    .no-result { text-align: center; padding: 4rem; color: var(--text-light); display: none; }
+    .no-result.visible { display: block; }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">B<span>.</span>DIA</a>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="../index.html#about">À propos</a></li>
+          <li><a href="../index.html#skills">Compétences</a></li>
+          <li><a href="projets.html" style="color:var(--violet-main)">Projets</a></li>
+          <li><a href="../index.html#experience">Parcours</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="container">
+      <span class="section-label">Mes réalisations</span>
+      <h1 style="font-size:clamp(2rem,5vw,3.5rem);margin-top:1rem;">Mes projets</h1>
+      <p>Des projets réalisés à l'ESTM et à l'UNCHK. Chaque projet représente une étape de mon apprentissage.</p>
+    </div>
+  </section>
+
+  <!-- SEARCH FORM -->
+  <section class="search-section">
+    <div class="container">
+      <div class="search-wrap">
+        <h3>🔍 Rechercher un projet</h3>
+        <p>Tape un mot-clé ou filtre par technologie pour trouver un projet précis.</p>
+        <div class="search-form">
+          <input type="search" id="searchInput" placeholder="Ex : sécurité, PHP, C, web..." aria-label="Rechercher un projet" />
+          <button class="btn btn-primary" onclick="filterProjects()">Rechercher</button>
+          <button class="btn btn-outline" onclick="resetSearch()">Réinitialiser</button>
+        </div>
+        <div class="filter-chips">
+          <button class="chip active" onclick="filterByTag('all', this)">Tous</button>
+          <button class="chip" onclick="filterByTag('c', this)">Langage C</button>
+          <button class="chip" onclick="filterByTag('php', this)">PHP</button>
+          <button class="chip" onclick="filterByTag('html', this)">HTML</button>
+          <button class="chip" onclick="filterByTag('css', this)">CSS</button>
+          <button class="chip" onclick="filterByTag('cybersécurité', this)">Cybersécurité</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS GRID -->
+  <section class="projects-section">
+    <div class="container">
+      <div class="projects-big-grid" id="projectsGrid">
+
+        <div class="project-card" data-tags="c cybersécurité" data-title="secureaccess manager gestion utilisateurs sécurité mot de passe accès">
+          <div class="project-thumb project-thumb-1">🔐</div>
+          <div class="project-info">
+            <div class="project-tags">
+              <span class="tag">Langage C</span><span class="tag">Cybersécurité</span>
+            </div>
+            <h3>SecureAccess Manager</h3>
+            <p>Application console en C développée à l'UNCHK. Gestion d'utilisateurs avec niveaux d'accès (standard/admin), vérification de la force des mots de passe et sauvegarde dans un fichier binaire <code>users.dat</code>.</p>
+            <div class="project-links">
+              <a href="code.html#sa-main" class="project-link">Voir le code →</a>
+              <a href="https://github.com/fatadia10" target="_blank" class="project-link">GitHub →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card" data-tags="php html" data-title="exercices php fonctions variables age date page dynamique">
+          <div class="project-thumb project-thumb-2">🐘</div>
+          <div class="project-info">
+            <div class="project-tags">
+              <span class="tag">PHP</span><span class="tag">HTML</span>
+            </div>
+            <h3>Exercices PHP</h3>
+            <p>Premiers pas en PHP dans le cadre du cours de M. Diouf : fonctions d'addition, variables dynamiques, calcul d'âge, affichage de la date et message de bienvenue selon l'heure.</p>
+            <div class="project-links">
+              <a href="code.html#php-essai" class="project-link">Voir le code →</a>
+              <a href="https://github.com/fatadia10" target="_blank" class="project-link">GitHub →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card" data-tags="html css" data-title="portfolio personnel web design responsive multipage">
+          <div class="project-thumb project-thumb-3">🌐</div>
+          <div class="project-info">
+            <div class="project-tags">
+              <span class="tag">HTML</span><span class="tag">CSS</span>
+            </div>
+            <h3>Portfolio personnel</h3>
+            <p>Ce portfolio ! Réalisé dans le cadre du cours PHP & MySQL de M. Diouf à l'ESTM. Multipage, responsive (mobile/tablette/desktop), design violet et créatif.</p>
+            <div class="project-links">
+              <a href="code.html" class="project-link">Voir le code →</a>
+              <a href="https://github.com/fatadia10" target="_blank" class="project-link">GitHub →</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="no-result" id="noResult">
+        <p style="font-size:2rem;">🔍</p>
+        <p style="margin-top:1rem;">Aucun projet trouvé pour cette recherche.</p>
+        <button class="btn btn-outline" onclick="resetSearch()" style="margin-top:1.5rem;">Voir tous les projets</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="../index.html" class="nav-logo">B<span>.</span>DIA</a>
+          <p>Étudiante en Génie Logiciel & Cybersécurité, passionnée par le code et la sécurité numérique.</p>
+          <div class="social-links">
+            <a href="https://www.instagram.com/Bineta_dia" target="_blank" class="social-link" aria-label="Instagram">📸</a>
+            <a href="mailto:diabineta2006@gmail.com" class="social-link" aria-label="Email">📧</a>
+            <a href="#" class="social-link" aria-label="GitHub">🐙</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="../index.html#about">→ À propos</a></li>
+            <li><a href="../index.html#skills">→ Compétences</a></li>
+            <li><a href="projets.html">→ Projets</a></li>
+            <li><a href="../index.html#experience">→ Parcours</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="contact.html">→ Me contacter</a></li>
+            <li><a href="contact.html#project-form">→ Demander un projet</a></li>
+            <li><a href="mailto:diabineta2006@gmail.com">→ diabineta2006@gmail.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 Bineta DIA — Tous droits réservés</span>
+        <button class="footer-cv-btn">⬇ Télécharger mon CV</button>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+    function filterProjects() {
+      const query = document.getElementById('searchInput').value.toLowerCase().trim();
+      const cards = document.querySelectorAll('.project-card');
+      let found = 0;
+      cards.forEach(card => {
+        const title = card.dataset.title || '';
+        const tags = card.dataset.tags || '';
+        const visible = !query || title.includes(query) || tags.includes(query);
+        card.style.display = visible ? 'block' : 'none';
+        if (visible) found++;
+      });
+      document.getElementById('noResult').classList.toggle('visible', found === 0);
+    }
+
+    function filterByTag(tag, btn) {
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('searchInput').value = '';
+      const cards = document.querySelectorAll('.project-card');
+      let found = 0;
+      cards.forEach(card => {
+        const tags = card.dataset.tags || '';
+        const visible = tag === 'all' || tags.includes(tag);
+        card.style.display = visible ? 'block' : 'none';
+        if (visible) found++;
+      });
+      document.getElementById('noResult').classList.toggle('visible', found === 0);
+    }
+
+    function resetSearch() {
+      document.getElementById('searchInput').value = '';
+      document.querySelectorAll('.project-card').forEach(c => c.style.display = 'block');
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      document.querySelector('.chip').classList.add('active');
+      document.getElementById('noResult').classList.remove('visible');
+    }
+
+    document.getElementById('searchInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') filterProjects();
+    });
+  </script>
+</body>
+</html>

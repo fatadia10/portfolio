@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Code des projets — Bineta DIA</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    .page-hero {
+      padding: 140px 0 4rem;
+      background: linear-gradient(135deg, var(--violet-mist), var(--white));
+      text-align: center;
+    }
+    .page-hero p { max-width: 540px; margin: 1rem auto 0; color: var(--text-light); }
+
+    .code-section { padding: 5rem 0; }
+
+    .project-block {
+      margin-bottom: 4rem;
+      background: var(--white);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .project-block-header {
+      padding: 1.8rem 2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      background: var(--violet-mist);
+    }
+
+    .project-block-header h3 { margin: 0; font-size: 1.2rem; }
+
+    .project-block-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .github-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--violet-deep);
+      color: var(--white);
+      padding: 0.5rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+    .github-btn:hover { background: var(--violet-main); transform: translateY(-2px); }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      background: #1e1b2e;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      padding: 0.8rem 1.4rem;
+      font-size: 0.83rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.5);
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      border-bottom: 2px solid transparent;
+      transition: var(--transition);
+      white-space: nowrap;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .tab-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .tab-btn:hover { color: var(--white); }
+
+    /* Code block */
+    .code-panel { display: none; position: relative; }
+    .code-panel.active { display: block; }
+
+    .copy-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.7);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: var(--radius-sm);
+      padding: 0.4rem 0.9rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: 'DM Sans', sans-serif;
+      z-index: 2;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.2); color: var(--white); }
+    .copy-btn.copied { background: #22c55e; color: white; border-color: #22c55e; }
+
+    pre {
+      margin: 0;
+      padding: 2rem;
+      overflow-x: auto;
+      background: #1e1b2e;
+      font-family: 'Courier New', monospace;
+      font-size: 0.87rem;
+      line-height: 1.7;
+      color: #e2e8f0;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    /* Syntax coloring */
+    .kw { color: #c084fc; font-weight: bold; }   /* keywords */
+    .fn { color: #60a5fa; }                        /* functions */
+    .str { color: #86efac; }                       /* strings */
+    .cm { color: #64748b; font-style: italic; }    /* comments */
+    .nb { color: #fb923c; }                        /* numbers */
+    .tp { color: #f472b6; }                        /* types */
+    .var { color: #e2e8f0; }                       /* variables */
+    .op { color: #94a3b8; }                        /* operators */
+    .ht { color: #f97316; }                        /* html tags */
+    .at { color: #60a5fa; }                        /* attributes */
+    .vl { color: #86efac; }                        /* values */
+    .ph { color: #c084fc; }                        /* php tags */
+
+    .project-desc {
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+    }
+    .project-desc p { font-size: 0.92rem; color: var(--text-mid); }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar scrolled">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">B<span>.</span>DIA</a>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="../index.html#about">À propos</a></li>
+          <li><a href="../index.html#skills">Compétences</a></li>
+          <li><a href="projets.html" style="color:var(--violet-main)">Projets</a></li>
+          <li><a href="../index.html#experience">Parcours</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="container">
+      <span class="section-label">Code source</span>
+      <h1 style="font-size:clamp(2rem,5vw,3.5rem);margin-top:1rem;">Voir le code</h1>
+      <p>Le code source de mes projets, visible directement ici ou sur GitHub.</p>
+    </div>
+  </section>
+
+  <section class="code-section">
+    <div class="container">
+
+      <!-- ===== PROJET 1 : SecureAccess ===== -->
+      <div class="project-block">
+        <div class="project-block-header">
+          <div>
+            <div class="project-tags" style="margin-bottom:0.5rem;">
+              <span class="tag">Langage C</span><span class="tag">Cybersécurité</span>
+            </div>
+            <h3>🔐 SecureAccess Manager</h3>
+          </div>
+          <div class="project-block-meta">
+            <a href="https://github.com/fatadia10" target="_blank" class="github-btn">🐙 Voir sur GitHub</a>
+          </div>
+        </div>
+        <div class="project-desc">
+          <p>Application console en langage C développée à l'UNCHK. Gestion d'utilisateurs avec niveaux d'accès, vérification de mots de passe et persistance en fichier binaire.</p>
+        </div>
+        <div class="tabs">
+          <button class="tab-btn active" onclick="switchTab('sa', 'main', this)">main.c</button>
+        </div>
+        <div class="code-panel active" id="sa-main">
+          <button class="copy-btn" onclick="copyCode('sa-main', this)">📋 Copier</button>
+          <pre><span class="cm">/* SecureAccess Manager — Bineta DIA — UNCHK 2024/2025 */</span>
+<span class="kw">#include</span> <span class="str">&lt;stdio.h&gt;</span>
+<span class="kw">#include</span> <span class="str">&lt;stdlib.h&gt;</span>
+<span class="kw">#include</span> <span class="str">&lt;string.h&gt;</span>
+<span class="kw">#include</span> <span class="str">&lt;ctype.h&gt;</span>
+
+<span class="cm">/* Structure représentant un utilisateur */</span>
+<span class="kw">typedef struct</span> {
+    <span class="tp">int</span> id;
+    <span class="tp">char</span> username[<span class="nb">50</span>];
+    <span class="tp">char</span> password[<span class="nb">50</span>];
+    <span class="tp">int</span> access_level; <span class="cm">/* 1: standard, 2: admin */</span>
+} <span class="tp">User</span>;
+
+<span class="cm">/* Vide le buffer stdin */</span>
+<span class="kw">void</span> <span class="fn">clean_stdin</span>() {
+    <span class="tp">int</span> c;
+    <span class="kw">while</span> ((c = <span class="fn">getchar</span>()) != <span class="str">'\n'</span> &amp;&amp; c != EOF);
+}
+
+<span class="cm">/* Ajoute un nouvel utilisateur */</span>
+<span class="kw">void</span> <span class="fn">addUser</span>(<span class="tp">User</span> **users, <span class="tp">int</span> *count, <span class="tp">int</span> *nextId) {
+    <span class="tp">User</span> *temp = (<span class="tp">User</span> *)<span class="fn">realloc</span>(*users, (*count + <span class="nb">1</span>) * <span class="kw">sizeof</span>(<span class="tp">User</span>));
+    <span class="kw">if</span> (temp == NULL) {
+        <span class="fn">printf</span>(<span class="str">"Erreur : Mémoire insuffisante.\n"</span>);
+        <span class="kw">return</span>;
+    }
+    *users = temp;
+    <span class="tp">User</span> newUser;
+    newUser.id = (*nextId)++;
+    <span class="fn">printf</span>(<span class="str">"\n--- Ajouter un utilisateur ---\n"</span>);
+    <span class="fn">printf</span>(<span class="str">"Nom d'utilisateur : "</span>);
+    <span class="fn">scanf</span>(<span class="str">"%49s"</span>, newUser.username);
+    <span class="fn">printf</span>(<span class="str">"Mot de passe : "</span>);
+    <span class="fn">scanf</span>(<span class="str">"%49s"</span>, newUser.password);
+    <span class="fn">printf</span>(<span class="str">"Niveau d'accès (1: standard, 2: admin) : "</span>);
+    <span class="kw">while</span>(<span class="fn">scanf</span>(<span class="str">"%d"</span>, &amp;newUser.access_level) != <span class="nb">1</span>) {
+        <span class="fn">printf</span>(<span class="str">"Entrée invalide. Saisissez un nombre : "</span>);
+        <span class="fn">clean_stdin</span>();
+    }
+    (*users)[*count] = newUser;
+    (*count)++;
+    <span class="fn">printf</span>(<span class="str">"Utilisateur ajouté (ID: %d).\n"</span>, newUser.id);
+}
+
+<span class="cm">/* Vérifie la force d'un mot de passe */</span>
+<span class="tp">int</span> <span class="fn">checkPasswordStrength</span>(<span class="kw">const</span> <span class="tp">char</span> *password) {
+    <span class="tp">int</span> hasDigit = <span class="nb">0</span>;
+    <span class="kw">if</span> (<span class="fn">strlen</span>(password) &lt; <span class="nb">6</span>) <span class="kw">return</span> <span class="nb">0</span>;
+    <span class="kw">for</span> (<span class="tp">int</span> i = <span class="nb">0</span>; password[i] != <span class="str">'\0'</span>; i++) {
+        <span class="kw">if</span> (<span class="fn">isdigit</span>(password[i])) hasDigit = <span class="nb">1</span>;
+    }
+    <span class="kw">return</span> hasDigit;
+}
+
+<span class="cm">/* Sauvegarde les utilisateurs dans un fichier binaire */</span>
+<span class="kw">void</span> <span class="fn">saveUsers</span>(<span class="tp">User</span> *users, <span class="tp">int</span> count, <span class="kw">const</span> <span class="tp">char</span> *filename) {
+    FILE *file = <span class="fn">fopen</span>(filename, <span class="str">"wb"</span>);
+    <span class="kw">if</span> (file == NULL) { <span class="fn">perror</span>(<span class="str">"Erreur sauvegarde"</span>); <span class="kw">return</span>; }
+    <span class="fn">fwrite</span>(&amp;count, <span class="kw">sizeof</span>(<span class="tp">int</span>), <span class="nb">1</span>, file);
+    <span class="fn">fwrite</span>(users, <span class="kw">sizeof</span>(<span class="tp">User</span>), count, file);
+    <span class="fn">fclose</span>(file);
+    <span class="fn">printf</span>(<span class="str">"Données sauvegardées dans %s.\n"</span>, filename);
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">User</span> *users = NULL;
+    <span class="tp">int</span> count = <span class="nb">0</span>, nextId = <span class="nb">1</span>, choix;
+    <span class="kw">const</span> <span class="tp">char</span> *filename = <span class="str">"users.dat"</span>;
+
+    <span class="fn">printf</span>(<span class="str">"=== SecureAccess Manager ===\n"</span>);
+    <span class="kw">do</span> {
+        <span class="fn">printf</span>(<span class="str">"\n1. Ajouter\n2. Afficher\n3. Supprimer\n4. Sauvegarder\n5. Vérifier\n0. Quitter\n> "</span>);
+        <span class="fn">scanf</span>(<span class="str">"%d"</span>, &amp;choix);
+        <span class="fn">clean_stdin</span>();
+        <span class="kw">switch</span>(choix) {
+            <span class="kw">case</span> <span class="nb">1</span>: <span class="fn">addUser</span>(&amp;users, &amp;count, &amp;nextId); <span class="kw">break</span>;
+            <span class="kw">case</span> <span class="nb">4</span>: <span class="fn">saveUsers</span>(users, count, filename); <span class="kw">break</span>;
+            <span class="kw">case</span> <span class="nb">0</span>: <span class="fn">printf</span>(<span class="str">"Au revoir !\n"</span>); <span class="kw">break</span>;
+            <span class="kw">default</span>: <span class="fn">printf</span>(<span class="str">"Option invalide.\n"</span>);
+        }
+    } <span class="kw">while</span>(choix != <span class="nb">0</span>);
+    <span class="fn">free</span>(users);
+    <span class="kw">return</span> <span class="nb">0</span>;
+}</pre>
+        </div>
+      </div>
+
+      <!-- ===== PROJET 2 : Exercices PHP ===== -->
+      <div class="project-block">
+        <div class="project-block-header">
+          <div>
+            <div class="project-tags" style="margin-bottom:0.5rem;">
+              <span class="tag">PHP</span><span class="tag">HTML</span>
+            </div>
+            <h3>🐘 Exercices PHP</h3>
+          </div>
+          <div class="project-block-meta">
+            <a href="https://github.com/fatadia10" target="_blank" class="github-btn">🐙 Voir sur GitHub</a>
+          </div>
+        </div>
+        <div class="project-desc">
+          <p>Premiers exercices PHP réalisés dans le cadre du cours de M. Diouf à l'ESTM. Fonctions, variables dynamiques et pages interactives.</p>
+        </div>
+        <div class="tabs">
+          <button class="tab-btn active" onclick="switchTab('php', 'essai', this)">essai.php</button>
+          <button class="tab-btn" onclick="switchTab('php', 'index', this)">index.php</button>
+          <button class="tab-btn" onclick="switchTab('php', 'mission', this)">mission.php</button>
+        </div>
+
+        <div class="code-panel active" id="php-essai">
+          <button class="copy-btn" onclick="copyCode('php-essai', this)">📋 Copier</button>
+          <pre><span class="ph">&lt;?php</span>
+<span class="cm">/* Exercice 1 — Fonction d'addition — Bineta DIA */</span>
+
+<span class="kw">function</span> <span class="fn">additionner</span>(<span class="var">$a</span>, <span class="var">$b</span>) {
+    <span class="var">$resultat</span> = <span class="var">$a</span> + <span class="var">$b</span>;
+    <span class="kw">return</span> <span class="var">$resultat</span>;
+}
+
+<span class="cm">/* Affiche le résultat : 12 */</span>
+<span class="kw">echo</span> <span class="fn">additionner</span>(<span class="nb">5</span>, <span class="nb">7</span>);
+<span class="ph">?&gt;</span></pre>
+        </div>
+
+        <div class="code-panel" id="php-index">
+          <button class="copy-btn" onclick="copyCode('php-index', this)">📋 Copier</button>
+          <pre><span class="ht">&lt;!DOCTYPE html&gt;</span>
+<span class="ht">&lt;html</span> <span class="at">lang</span>=<span class="vl">"fr"</span><span class="ht">&gt;</span>
+<span class="ht">&lt;head&gt;</span>
+    <span class="ht">&lt;meta</span> <span class="at">charset</span>=<span class="vl">"UTF-8"</span><span class="ht">&gt;</span>
+    <span class="ht">&lt;title&gt;</span>Exercice PHP — Heure<span class="ht">&lt;/title&gt;</span>
+<span class="ht">&lt;/head&gt;</span>
+<span class="ht">&lt;body&gt;</span>
+    <span class="ht">&lt;h1&gt;</span>
+        <span class="ph">&lt;?php</span>
+        <span class="cm">/* Affiche l'heure actuelle */</span>
+        <span class="kw">echo</span> <span class="fn">date</span>(<span class="str">"H:i"</span>);
+        <span class="var">$prenom</span> = <span class="str">"Bineta"</span>;
+        <span class="ph">?&gt;</span>
+    <span class="ht">&lt;/h1&gt;</span>
+    <span class="ht">&lt;p&gt;</span><span class="ph">&lt;?php</span> <span class="kw">echo</span> <span class="var">$prenom</span>; <span class="ph">?&gt;</span> — Bienvenue sur ma page !<span class="ht">&lt;/p&gt;</span>
+<span class="ht">&lt;/body&gt;</span>
+<span class="ht">&lt;/html&gt;</span></pre>
+        </div>
+
+        <div class="code-panel" id="php-mission">
+          <button class="copy-btn" onclick="copyCode('php-mission', this)">📋 Copier</button>
+          <pre><span class="ht">&lt;!DOCTYPE html&gt;</span>
+<span class="ht">&lt;html</span> <span class="at">lang</span>=<span class="vl">"fr"</span><span class="ht">&gt;</span>
+<span class="ht">&lt;head&gt;</span>
+    <span class="ht">&lt;meta</span> <span class="at">charset</span>=<span class="vl">"UTF-8"</span><span class="ht">&gt;</span>
+    <span class="ht">&lt;title&gt;</span>Ma Page Dynamique<span class="ht">&lt;/title&gt;</span>
+<span class="ht">&lt;/head&gt;</span>
+<span class="ht">&lt;body&gt;</span>
+    <span class="ph">&lt;?php</span>
+    <span class="var">$prenom</span>        = <span class="str">"BINETA"</span>;
+    <span class="var">$nom</span>           = <span class="str">"DIA"</span>;
+    <span class="var">$ville</span>         = <span class="str">"Dakar"</span>;
+    <span class="var">$anneenaissance</span> = <span class="nb">2006</span>;
+
+    <span class="cm">/* Calcul de l'âge */</span>
+    <span class="var">$anneeActuelle</span> = <span class="fn">date</span>(<span class="str">"Y"</span>);
+    <span class="var">$age</span>           = <span class="var">$anneeActuelle</span> - <span class="var">$anneenaissance</span>;
+
+    <span class="cm">/* Message selon l'heure */</span>
+    <span class="var">$heure</span> = <span class="fn">date</span>(<span class="str">"H"</span>);
+    <span class="kw">if</span> (<span class="var">$heure</span> &lt; <span class="nb">18</span>) {
+        <span class="var">$bienvenue</span> = <span class="str">"Bonjour"</span>;
+    } <span class="kw">else</span> {
+        <span class="var">$bienvenue</span> = <span class="str">"Bonsoir"</span>;
+    }
+    <span class="ph">?&gt;</span>
+
+    <span class="ht">&lt;h1&gt;</span><span class="ph">&lt;?php</span> <span class="kw">echo</span> <span class="str">"$prenom $nom"</span>; <span class="ph">?&gt;</span><span class="ht">&lt;/h1&gt;</span>
+    <span class="ht">&lt;p&gt;</span>J'ai <span class="ph">&lt;?php</span> <span class="kw">echo</span> <span class="var">$age</span>; <span class="ph">?&gt;</span> ans.<span class="ht">&lt;/p&gt;</span>
+    <span class="ht">&lt;p&gt;</span>Ville : <span class="ph">&lt;?php</span> <span class="kw">echo</span> <span class="var">$ville</span>; <span class="ph">?&gt;</span><span class="ht">&lt;/p&gt;</span>
+    <span class="ht">&lt;p&gt;</span>Date : <span class="ph">&lt;?php</span> <span class="kw">echo</span> <span class="fn">date</span>(<span class="str">"d/m/Y"</span>); <span class="ph">?&gt;</span><span class="ht">&lt;/p&gt;</span>
+    <span class="ht">&lt;h3&gt;</span><span class="ph">&lt;?php</span> <span class="kw">echo</span> <span class="str">"$bienvenue et bienvenue sur ma page !"</span>; <span class="ph">?&gt;</span><span class="ht">&lt;/h3&gt;</span>
+<span class="ht">&lt;/body&gt;</span>
+<span class="ht">&lt;/html&gt;</span></pre>
+        </div>
+      </div>
+
+      <!-- RETOUR -->
+      <div style="text-align:center;margin-top:2rem;">
+        <a href="projets.html" class="btn btn-outline">← Retour aux projets</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="../index.html" class="nav-logo">B<span>.</span>DIA</a>
+          <p>Étudiante en Génie Logiciel & Cybersécurité, passionnée par le code et la sécurité numérique.</p>
+          <div class="social-links">
+            <a href="https://www.instagram.com/Bineta_dia" target="_blank" class="social-link" aria-label="Instagram">📸</a>
+            <a href="mailto:diabineta2006@gmail.com" class="social-link" aria-label="Email">📧</a>
+            <a href="#" class="social-link" aria-label="GitHub">🐙</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="../index.html#about">→ À propos</a></li>
+            <li><a href="../index.html#skills">→ Compétences</a></li>
+            <li><a href="projets.html">→ Projets</a></li>
+            <li><a href="../index.html#experience">→ Parcours</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="contact.html">→ Me contacter</a></li>
+            <li><a href="contact.html#project-form">→ Demander un projet</a></li>
+            <li><a href="mailto:diabineta2006@gmail.com">→ diabineta2006@gmail.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 Bineta DIA — Tous droits réservés</span>
+        <button class="footer-cv-btn">⬇ Télécharger mon CV</button>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Hamburger
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+    // Tab switching
+    function switchTab(project, file, btn) {
+      // Désactiver tous les onglets du même projet
+      const allBtns = btn.closest('.tabs').querySelectorAll('.tab-btn');
+      allBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Masquer tous les panneaux du projet
+      const allPanels = btn.closest('.project-block').querySelectorAll('.code-panel');
+      allPanels.forEach(p => p.classList.remove('active'));
+
+      // Afficher le bon panneau
+      document.getElementById(`${project}-${file}`).classList.add('active');
+    }
+
+    // Copier le code
+    function copyCode(panelId, btn) {
+      const pre = document.getElementById(panelId).querySelector('pre');
+      const text = pre.innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = '✅ Copié !';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = '📋 Copier';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

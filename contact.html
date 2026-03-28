@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Bineta DIA</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    .page-hero {
+      padding: 140px 0 5rem;
+      background: linear-gradient(135deg, var(--violet-mist), var(--white));
+      text-align: center;
+    }
+    .page-hero p { max-width: 500px; margin: 1rem auto 0; color: var(--text-light); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; margin-bottom: 3rem; }
+    .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
+    .info-card {
+      background: var(--white); border-radius: var(--radius); padding: 1.5rem;
+      border: 1px solid var(--border); display: flex; gap: 1rem; align-items: flex-start;
+      transition: var(--transition);
+    }
+    .info-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+    .info-icon {
+      font-size: 1.6rem; width: 48px; height: 48px; display: flex; align-items: center;
+      justify-content: center; background: var(--violet-pale); border-radius: var(--radius-sm); flex-shrink: 0;
+    }
+    .info-text h4 { margin-bottom: 0.2rem; font-size: 0.9rem; }
+    .info-text p { font-size: 0.85rem; color: var(--text-light); }
+    .info-text a { color: var(--violet-main); font-weight: 600; font-size: 0.9rem; }
+    .success-msg {
+      display: none; background: #f0fdf4; border: 1.5px solid #86efac; color: #166534;
+      border-radius: var(--radius-sm); padding: 1rem 1.4rem; font-size: 0.9rem;
+      font-weight: 600; margin-top: 1rem;
+    }
+    .success-msg.show { display: block; }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+    @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">B<span>.</span>DIA</a>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="../index.html#about">À propos</a></li>
+          <li><a href="../index.html#skills">Compétences</a></li>
+          <li><a href="projets.html">Projets</a></li>
+          <li><a href="../index.html#experience">Parcours</a></li>
+          <li><a href="contact.html" style="color:var(--violet-main)">Contact</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="container">
+      <span class="section-label">Restons en contact</span>
+      <h1 style="font-size:clamp(2rem,5vw,3.5rem);margin-top:1rem;">Me contacter</h1>
+      <p>Une question, une idée ou un projet ? Je lis tous les messages et réponds dans les 48h.</p>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section class="section contact-section">
+    <div class="container">
+
+      <!-- FORM 1 : Contact -->
+      <div class="section-header" style="text-align:left;margin-bottom:2rem;">
+        <span class="section-label">Formulaire de contact</span>
+        <h2 style="margin-top:0.5rem;">Envoyer un message</h2>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="info-card">
+            <div class="info-icon">📧</div>
+            <div class="info-text">
+              <h4>Email</h4>
+              <a href="mailto:diabineta2006@gmail.com">diabineta2006@gmail.com</a>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">📸</div>
+            <div class="info-text">
+              <h4>Instagram</h4>
+              <a href="https://www.instagram.com/Bineta_dia" target="_blank">@Bineta_dia</a>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">🐙</div>
+            <div class="info-text">
+              <h4>GitHub</h4>
+              <a href="#">github.com/bineta-dia</a>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">🎓</div>
+            <div class="info-text">
+              <h4>Formations</h4>
+              <p>ESTM & UNCHK — Dakar</p>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">📍</div>
+            <div class="info-text">
+              <h4>Localisation</h4>
+              <p>Dakar, Sénégal</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <h3>💬 Écrivez-moi</h3>
+          <p>Pour toute question, collaboration ou simplement dire bonjour !</p>
+          <form id="contactForm" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="contact-prenom">Prénom *</label>
+                <input type="text" id="contact-prenom" name="prenom" placeholder="Votre prénom" required />
+              </div>
+              <div class="form-group">
+                <label for="contact-nom">Nom *</label>
+                <input type="text" id="contact-nom" name="nom" placeholder="Votre nom" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="contact-email">Email *</label>
+              <input type="email" id="contact-email" name="email" placeholder="votre@email.com" required />
+            </div>
+            <div class="form-group">
+              <label for="contact-sujet">Sujet</label>
+              <input type="text" id="contact-sujet" name="sujet" placeholder="Ex : Collaboration, stage, question..." />
+            </div>
+            <div class="form-group">
+              <label for="contact-message">Message *</label>
+              <textarea id="contact-message" name="message" rows="5" placeholder="Votre message ici..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Envoyer le message ✦</button>
+          </form>
+          <div class="success-msg" id="contactSuccess">
+            ✅ Merci pour votre message ! Bineta vous répondra dans les 48h.
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- FORM 2 : Demande de projet -->
+      <div id="project-form">
+        <div class="section-header" style="text-align:left;margin-bottom:2rem;">
+          <span class="section-label">Projet à réaliser</span>
+          <h2 style="margin-top:0.5rem;">Demander un projet</h2>
+        </div>
+
+        <div class="form-card-full">
+          <h3>🚀 Décrivez votre projet</h3>
+          <p>Vous avez une idée de site web ou d'application ? Remplissez ce formulaire et je vous recontacte rapidement.</p>
+          <form id="projectForm" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="proj-prenom">Prénom *</label>
+                <input type="text" id="proj-prenom" name="prenom" placeholder="Votre prénom" required />
+              </div>
+              <div class="form-group">
+                <label for="proj-nom">Nom *</label>
+                <input type="text" id="proj-nom" name="nom" placeholder="Votre nom" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="proj-email">Email *</label>
+                <input type="email" id="proj-email" name="email" placeholder="votre@email.com" required />
+              </div>
+              <div class="form-group">
+                <label for="proj-tel">Téléphone</label>
+                <input type="tel" id="proj-tel" name="telephone" placeholder="+221 77 000 00 00" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="proj-type">Type de projet *</label>
+                <select id="proj-type" name="type" required>
+                  <option value="">Sélectionner...</option>
+                  <option value="vitrine">Site vitrine</option>
+                  <option value="portfolio">Portfolio</option>
+                  <option value="ecommerce">Boutique en ligne</option>
+                  <option value="blog">Blog</option>
+                  <option value="application">Application web</option>
+                  <option value="autre">Autre</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="proj-budget">Budget estimé</label>
+                <select id="proj-budget" name="budget">
+                  <option value="">Sélectionner...</option>
+                  <option value="petit">Moins de 50 000 FCFA</option>
+                  <option value="moyen">50 000 – 150 000 FCFA</option>
+                  <option value="grand">150 000 – 300 000 FCFA</option>
+                  <option value="libre">À discuter</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="proj-delai">Délai souhaité</label>
+              <input type="text" id="proj-delai" name="delai" placeholder="Ex : 1 mois, avant fin mai..." />
+            </div>
+            <div class="form-group">
+              <label for="proj-description">Description du projet *</label>
+              <textarea id="proj-description" name="description" rows="5" placeholder="Décrivez votre projet : objectif, public cible, fonctionnalités souhaitées..." required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="proj-ref">Sites de référence / inspiration</label>
+              <input type="text" id="proj-ref" name="references" placeholder="URL ou noms de sites qui vous inspirent..." />
+            </div>
+            <button type="submit" class="btn btn-primary">Soumettre le projet ✦</button>
+          </form>
+          <div class="success-msg" id="projectSuccess">
+            ✅ Votre demande a bien été reçue ! Bineta vous contacte dans les 48h.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="../index.html" class="nav-logo">B<span>.</span>DIA</a>
+          <p>Étudiante en Génie Logiciel & Cybersécurité, passionnée par le code et la sécurité numérique.</p>
+          <div class="social-links">
+            <a href="https://www.instagram.com/Bineta_dia" target="_blank" class="social-link" aria-label="Instagram">📸</a>
+            <a href="mailto:diabineta2006@gmail.com" class="social-link" aria-label="Email">📧</a>
+            <a href="#" class="social-link" aria-label="GitHub">🐙</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="../index.html#about">→ À propos</a></li>
+            <li><a href="../index.html#skills">→ Compétences</a></li>
+            <li><a href="projets.html">→ Projets</a></li>
+            <li><a href="../index.html#experience">→ Parcours</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="contact.html">→ Me contacter</a></li>
+            <li><a href="#project-form">→ Demander un projet</a></li>
+            <li><a href="mailto:diabineta2006@gmail.com">→ diabineta2006@gmail.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 Bineta DIA — Tous droits réservés</span>
+        <button class="footer-cv-btn">⬇ Télécharger mon CV</button>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const required = this.querySelectorAll('[required]');
+      let valid = true;
+      required.forEach(field => {
+        if (!field.value.trim()) { field.style.borderColor = '#ef4444'; valid = false; }
+        else { field.style.borderColor = ''; }
+      });
+      if (valid) {
+        document.getElementById('contactSuccess').classList.add('show');
+        this.reset();
+        setTimeout(() => document.getElementById('contactSuccess').classList.remove('show'), 5000);
+      }
+    });
+
+    document.getElementById('projectForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const required = this.querySelectorAll('[required]');
+      let valid = true;
+      required.forEach(field => {
+        if (!field.value.trim()) { field.style.borderColor = '#ef4444'; valid = false; }
+        else { field.style.borderColor = ''; }
+      });
+      if (valid) {
+        document.getElementById('projectSuccess').classList.add('show');
+        this.reset();
+        setTimeout(() => document.getElementById('projectSuccess').classList.remove('show'), 5000);
+      }
+    });
+  </script>
+</body>
+</html>
