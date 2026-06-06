@@ -1,53 +1,26 @@
 <?php require 'fonctions.php'; ?>
 
 <?php
-
-$projets = [
-    [
-        'titre'        => 'SecureAccess Manager',
-        'description'  => 'Application console en C pour la gestion d\'utilisateurs avec niveaux d\'accès et sauvegarde binaire.',
-        'technologies' => ['Langage C', 'Cybersécurité'],
-        'emoji'        => '🔐'
-    ],
-    [
-        'titre'        => 'Poubelle Intelligente',
-        'description'  => 'Système IoT avec ESP32 : ouverture automatique via capteur ultrasonique, LCD, LEDs et monitoring WiFi.',
-        'technologies' => ['Arduino', 'ESP32', 'IoT', 'C++'],
-        'emoji'        => '🗑️'
-    ],
-    [
-        'titre'        => 'Répertoire de Contacts',
-        'description'  => 'Application console en C avec base de données SQLite. CRUD complet avec requêtes SQL.',
-        'technologies' => ['Langage C', 'SQLite', 'SQL'],
-        'emoji'        => '📒'
-    ],
-    [
-        'titre'        => 'Exercices PHP',
-        'description'  => 'Premiers pas en PHP : fonctions, variables dynamiques, calcul d\'âge et pages interactives.',
-        'technologies' => ['PHP', 'HTML'],
-        'emoji'        => '🐘'
-    ],
-    [
-        'titre'        => 'Portfolio personnel',
-        'description'  => 'Portfolio multipage responsive en HTML/CSS déployé sur GitHub Pages.',
-        'technologies' => ['HTML', 'CSS'],
-        'emoji'        => '🌐'
-    ],
-];
-
+session_start();
+require 'config/connexion.php';
+enregistrer_visite($pdo, 'projets.php');
 $mot_cle   = nettoyer($_GET['q'] ?? '');
 $resultats = [];
-
 if ($mot_cle !== '') {
-    foreach ($projets as $projet) {
-        if (stripos($projet['titre'], $mot_cle) !== false ||
-            stripos($projet['description'], $mot_cle) !== false) {
-            $resultats[] = $projet;
-        }
-    }
+    $stmt = $pdo->prepare(
+        "SELECT * FROM projets 
+         WHERE titre LIKE ? OR description LIKE ? 
+         ORDER BY date_creation DESC"
+    );
+    $terme = '%' . $mot_cle . '%';
+    $stmt->execute([$terme, $terme]);
 } else {
-    $resultats = $projets;
+    $stmt = $pdo->query(
+        "SELECT * FROM projets ORDER BY date_creation DESC"
+    );
 }
+
+$resultats = $stmt->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -129,47 +102,35 @@ if ($mot_cle !== '') {
     <div class="container">
       <div class="projects-big-grid" id="projectsGrid">
 
-        <?php foreach ($resultats as $projet): ?>
+      <?php foreach ($resultats as $projet): ?>
     <div class="project-card">
-        <div class="project-thumb">
-            <?= $projet['emoji'] ?>
+        <div class="project-thumb" style="background:linear-gradient(135deg, var(--violet-pale), var(--violet-mist)); display:flex; align-items:center; justify-content:center; font-size:3rem; aspect-ratio:16/10;">
+            <?php if ($projet['image']): ?>
+                <img src="images/projets/<?= htmlspecialchars($projet['image']) ?>" 
+                     alt="<?= htmlspecialchars($projet['titre']) ?>"
+                     style="width:100%;height:100%;object-fit:cover;" />
+            <?php else: ?>
+                🖥️
+            <?php endif; ?>
         </div>
         <div class="project-info">
             <div class="project-tags">
-                <?php foreach ($projet['technologies'] as $tech): ?>
-                    <span class="tag"><?= htmlspecialchars($tech) ?></span>
+                <?php foreach (explode(',', $projet['technologies']) as $tech): ?>
+                    <span class="tag"><?= htmlspecialchars(trim($tech)) ?></span>
                 <?php endforeach; ?>
             </div>
             <h3><?= htmlspecialchars($projet['titre']) ?></h3>
             <p><?= htmlspecialchars($projet['description']) ?></p>
+            <?php if ($projet['lien']): ?>
+                <a href="<?= htmlspecialchars($projet['lien']) ?>" target="_blank" class="project-link">Voir le projet →</a>
+            <?php endif; ?>
         </div>
     </div>
 <?php endforeach; ?>
 
 <?php if (empty($resultats)): ?>
     <p style="text-align:center; color:var(--text-light); padding:3rem;">
-        Aucun projet trouvé pour "<?= $mot_cle ?>".
-    </p>
-<?php endif; ?><?php foreach ($resultats as $projet): ?>
-    <div class="project-card">
-        <div class="project-thumb">
-            <?= $projet['emoji'] ?>
-        </div>
-        <div class="project-info">
-            <div class="project-tags">
-                <?php foreach ($projet['technologies'] as $tech): ?>
-                    <span class="tag"><?= htmlspecialchars($tech) ?></span>
-                <?php endforeach; ?>
-            </div>
-            <h3><?= htmlspecialchars($projet['titre']) ?></h3>
-            <p><?= htmlspecialchars($projet['description']) ?></p>
-        </div>
-    </div>
-<?php endforeach; ?>
-
-<?php if (empty($resultats)): ?>
-    <p style="text-align:center; color:var(--text-light); padding:3rem;">
-        Aucun projet trouvé pour "<?= $mot_cle ?>".
+        Aucun projet trouvé pour "<?= htmlspecialchars($mot_cle) ?>".
     </p>
 <?php endif; ?>
       <div class="no-result" id="noResult">

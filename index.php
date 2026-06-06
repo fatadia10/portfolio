@@ -1,4 +1,10 @@
-<?php require 'fonctions.php'; ?>
+<?php
+session_start();
+require 'config/connexion.php';
+require 'fonctions.php';
+
+enregistrer_visite($pdo, 'index.php');
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -204,46 +210,40 @@
         <p>Des projets concrets réalisés pendant mes formations à l'ESTM et à l'UNCHK.</p>
       </div>
       <div class="projects-grid">
-        <div class="project-card">
-          <div class="project-thumb project-thumb-1">🔐</div>
-          <div class="project-info">
-            <div class="project-tags">
-              <span class="tag">Langage C</span><span class="tag">Cybersécurité</span>
-            </div>
-            <h3>SecureAccess Manager</h3>
-            <p>Application console en C pour la gestion d'utilisateurs avec niveaux d'accès, vérification de mots de passe et sauvegarde en fichier binaire.</p>
-            <div class="project-links">
-              <a href="projets.php" class="project-link">Voir le projet →</a>
-            </div>
-          </div>
+       <?php
+// Récupérer les 3 derniers projets
+$stmt = $pdo->query("SELECT * FROM projets ORDER BY date_creation DESC LIMIT 3");
+$projets_accueil = $stmt->fetchAll();
+?>
+
+<?php foreach ($projets_accueil as $projet): ?>
+    <div class="project-card">
+        <div class="project-thumb" style="background:linear-gradient(135deg, var(--violet-pale), var(--violet-mist)); display:flex; align-items:center; justify-content:center; font-size:3rem; aspect-ratio:16/10;">
+            <?php if ($projet['image']): ?>
+                <img src="images/projets/<?= htmlspecialchars($projet['image']) ?>"
+                     alt="<?= htmlspecialchars($projet['titre']) ?>"
+                     style="width:100%;height:100%;object-fit:cover;" />
+            <?php else: ?>
+                🖥️
+            <?php endif; ?>
         </div>
-        <div class="project-card">
-          <div class="project-thumb project-thumb-4">🗑️</div>
-          <div class="project-info">
+        <div class="project-info">
             <div class="project-tags">
-              <span class="tag">Arduino</span><span class="tag">ESP32</span><span class="tag">IoT</span>
+                <?php foreach (explode(',', $projet['technologies']) as $tech): ?>
+                    <span class="tag"><?= htmlspecialchars(trim($tech)) ?></span>
+                <?php endforeach; ?>
             </div>
-            <h3>Poubelle Intelligente</h3>
-            <p>Système IoT avec ESP32 : ouverture automatique via capteur ultrasonique, affichage LCD, LEDs, buzzer et monitoring WiFi en temps réel.</p>
-            <div class="project-links">
-              <a href="projets.php" class="project-link">Voir le projet →</a>
-            </div>
-          </div>
+            <h3><?= htmlspecialchars($projet['titre']) ?></h3>
+            <p><?= htmlspecialchars($projet['description']) ?></p>
         </div>
-        <div class="project-card">
-          <div class="project-thumb project-thumb-5">📒</div>
-          <div class="project-info">
-            <div class="project-tags">
-              <span class="tag">Langage C</span><span class="tag">SQLite</span>
-            </div>
-            <h3>Répertoire de Contacts</h3>
-            <p>Application console en C avec base de données SQLite. Gestion complète des contacts avec requêtes SQL (ajout, recherche, modification).</p>
-            <div class="project-links">
-              <a href="projets.php" class="project-link">Voir le projet →</a>
-            </div>
-          </div>
-        </div>
-      </div>
+    </div>
+<?php endforeach; ?>
+
+<?php if (empty($projets_accueil)): ?>
+    <p style="text-align:center; color:var(--text-light); padding:2rem;">
+        Aucun projet pour le moment.
+    </p>
+<?php endif; ?>
       <div style="text-align:center;margin-top:3rem;">
         <a href="projets.php" class="btn btn-outline">Voir tous les projets</a>
       </div>
